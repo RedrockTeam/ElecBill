@@ -6,10 +6,102 @@
 	<meta name="keywords" content="重邮,红岩网校工作站">
 	<link rel="stylesheet" href="dist/assets/css/main.css">
 	<title>宿舍绑定</title>
-	<script src="dist/assets/js/rem.js"></script>
+	<script src="dist/assets/js/main.min.js"></script>
 </head>
 <body class="query">
-	<div class="logo"></div>
-	<div></div>
+	<img class="logo" src="dist/assets/images/head.png">
+	<form action="">
+		<div class="text buildingSelect">
+			<div class="warn">数据无效</div>
+			<label class="iconfont">&#xe643;</label>
+			<select name="">
+				<option value="0">楼栋</option>
+				<option value="1">1栋</option>
+				<option value="2">2栋</option>
+			</select>
+			<span class="iconfont">&#xe611;</span>	
+		</div>
+		<div class="text roomSelect">
+			<div class="warn">数据无效</div>
+			<label class="iconfont">&#xe69a;</label>
+			<input class="roomNum" type="text" placeholder="寝室号">
+		</div>
+		<input class="submit" type="submit" value="确&nbsp;&nbsp;&nbsp;&nbsp;认">
+	</form>
+	<div class="layer">
+		<div class="black"></div>
+		<div class="box">
+			<div class="boxLogo"></div>
+			<p class="info">2333<br/>2333</p>
+			<div class="btn">
+				<div class="btnLeft">1</div>
+				<div class="btnRight">2</div>
+			</div>
+		</div>
+	</div>
+	<script src="dist/assets/js/zepto.min.js"></script>
+	<script>
+	    $('.buildingSelect span').on('touchend', function () {
+			$('select').attr('size', 2);
+		});
+
+		$('.submit').on('touchend', function (e) {
+			e.preventDefault();
+			var num = Number($('.roomNum').val()),
+				building = $('.buildingSelect select').val();
+
+			// building is right?
+			if (building == 0) {
+				$('.buildingSelect').css('border', '1px solid #f2282b');
+				$('.buildingSelect .warn').show();
+			} else {
+				$('.buildingSelect').css('border', '1px solid #19bcff');
+				$('.buildingSelect .warn').hide();
+			}
+
+			if (!isNaN(num) && String(num).length === 3) {
+				$('.roomSelect').css('border', '1px solid #19bcff');
+				$('.roomSelect .warn').hide();
+			} else {
+				$('.roomSelect').css('border', '1px solid #f2282b');
+				$('.roomSelect .warn').show();
+			}
+
+			if (building != 0 && !isNaN(num) && String(num).length === 3) {
+				layer.init({logo: 'dist/assets/images/yes.png'},[{className: 'btnLeft', value: '重置'}, {className: 'btnRight', value: '确认'}], function () {
+					$('.btnRight').on('touchend', function () {
+						layer.lock = true;
+						setTimeout(function () {
+							$('.btnRight').html('提交中...');
+						}, 100);
+						$.ajax({
+			    			url: url,
+			    			type: 'POST',
+			    			data: {
+			    				building: building,
+			    				room: num
+			    			},
+			    			success: function (res) {
+			    				callback(res);
+			    			},
+			    			error: function () {
+			    				alert('网络错误...');
+			    			}
+			    		});
+					});
+
+					$('.btnLeft').on('touchend', function () {
+						if (!layer.lock) {
+							layer.hide();	
+						}
+						return false;
+					});
+				});
+			} 
+
+			return false;	
+		});	
+		
+	</script>
 </body>
 </html>
