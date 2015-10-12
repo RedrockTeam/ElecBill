@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <meta name="keywords" content="重邮,红岩网校工作站">
-    <link rel="stylesheet" href="dist/assets/css/main.css">
+    <link rel="stylesheet" href="__PUBLIC__/elec/css/main.css">
     <title>电费查询</title>
-    <script src="dist/assets/js/main.min.js"></script>
+    <script src="__PUBLIC__/elec/js/main.min.js"></script>
 </head>
 <body class="detail">
     <div class="title">
@@ -63,7 +63,7 @@
             <div class="btn"></div>
         </div>
     </div>
-    <script src="dist/assets/js/zepto.min.js"></script>
+    <script src="__PUBLIC__/elec/js/zepto.min.js"></script>
     <script>
         //num居中
         $('.num .container').each(function (i, ele) {
@@ -132,7 +132,7 @@
         
         //change room
         $('.change').on('touchend', function () {
-            layer.init({src: 'dist/assets/images/smile.png'}, '您确定要重置宿舍信息么？<br/>一旦重置这个月就不能再次修改了', [{className: 'btnLeft', value: '返回'}, {className: 'btnRight', value: '确认'}], function () {
+            layer.init({src: '__PUBLIC__/elec/images/smile.png'}, '您确定要重置宿舍信息么？<br/>一旦重置这个月就不能再次修改了', [{className: 'btnLeft', value: '返回'}, {className: 'btnRight', value: '确认'}], function () {
                     $('.btnRight').on('touchend', function () {
                         layer.lock = true;
                         window.location.href = 'index.html';
