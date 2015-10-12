@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="keywords" content="重邮,红岩网校工作站">
+    <link rel="stylesheet" href="dist/assets/css/main.css">
+    <title>电费查询</title>
+    <script src="dist/assets/js/main.min.js"></script>
+</head>
+<body class="detail">
+    <div class="title">
+        <div>张三,1栋123寝室<span class="change">[重置寝室]</span><span class="already">[本月已设置]</span></div>
+    </div>
+    <div class="screen">
+        <div class="screenLeft">
+            <div class="caption">本月用电已达到</div>
+            <div class="num">
+                <div class="container">
+                    <div class="big">11</div>
+                    <div class="right">
+                        <div class="small">00</div>
+                        <div class="unit"><span></span>度</div>    
+                    </div>
+                </div>        
+            </div>
+        </div>
+        <div class="screenRight">
+            <div class="caption">本月电费已达到</div>
+            <div class="num">
+                <div class="container">
+                    <div class="big">7</div>
+                    <div class="right">
+                        <div class="small">10</div>
+                        <div class="unit"><span></span>度</div>    
+                    </div>
+                </div>        
+            </div>
+        </div>
+        <div class="time">抄表时间：8月20日18 : 21</div>
+    </div>
+    <ul class="detailData slide">
+        <li class="btn">用电详情<span class="iconfont">&#xe615;</span></li>
+        <li>电起度：<span>1</span></li>
+        <li>电止度：<span>1</span></li>
+        <li>当月免费电量：<span>1</span></li>
+        <li>最后抄表时间：<span>1</span></li>
+    </ul>
+    <div class="attention">
+        <h1>注意事项：</h1>
+        <p>
+            <span class="iconfont">&#xe633;</span>本服务支持当月查询，不支持跨月查询<br/>
+            <span class="iconfont">&#xe633;</span>数据为抄表时间数据，或与电表实时查询数据不一致<br/>
+            <span class="iconfont">&#xe633;</span>用电过程中如需查询，请致电62487902<br/>
+        </p>
+
+    </div>
+    <div class="layer">
+        <div class="black"></div>
+        <div class="box">
+            <div class="boxLogo"></div>
+            <p class="info"></p>
+            <div class="btn"></div>
+        </div>
+    </div>
+    <script src="dist/assets/js/zepto.min.js"></script>
+    <script>
+        //num居中
+        $('.num .container').each(function (i, ele) {
+            $(ele).css('width', ($(ele).find('.big').width() + $(ele).find('.right').width())+ 'px');
+        });
+        //slide
+        var slide = (function () {
+            var Slide = {}, state = 0, run = false;
+            // state = 0 未展开
+
+            Slide.down = function () {
+                console.log('down');
+                state = 1;
+                this.obj.animate({
+                    height: ((this.obj.find('li').height() + 2) * this.obj.find('li').length - 2) + 'px'
+                }, 300, 'ease-in');
+            };
+
+            Slide.up = function (fn) {
+                console.log('up');
+                state = 0;
+                this.obj.animate({
+                    height: this.obj.find('li').height() + 'px'
+                }, 300, 'ease-in');
+            };
+
+            Slide.init = function (obj, fn) {
+                var that = this;
+                this.obj = obj;
+                obj.find('.btn').eq(0).on('touchend', function () {
+                    if (run) {
+                        console.log('run');
+                        return false;
+                    }
+                    console.log('not run');
+                    if (state === 0) {
+                        that.down();
+                    } else {
+                        that.up();
+                    }
+                });
+                obj.find('.btn').eq(0).on('touchstart', function () {
+                    if (run) {
+                        console.log('run');
+                        return false;
+                    }
+                    console.log('not run');
+                    if (state === 0) {
+                        $('.slide .btn span').animate({
+                            rotate: '90deg'
+                        }, 300, 'ease-in');
+                        
+                    } else {
+                        $('.slide .btn span').animate({
+                            rotate: '0deg'
+                        }, 300, 'ease-in');
+                        
+                    }
+                });
+            };
+
+            return Slide;
+        })();
+
+        slide.init($('.slide'));
+        
+        //change room
+        $('.change').on('touchend', function () {
+            layer.init({src: 'dist/assets/images/smile.png'}, '您确定要重置宿舍信息么？<br/>一旦重置这个月就不能再次修改了', [{className: 'btnLeft', value: '返回'}, {className: 'btnRight', value: '确认'}], function () {
+                    $('.btnRight').on('touchend', function () {
+                        layer.lock = true;
+                        window.location.href = 'index.html';
+                    });
+
+                    $('.btnLeft').on('touchend', function () {
+                        if (!layer.lock) {
+                            layer.hide();
+                            $('.roomNum').show();   
+                        }
+                        return false;
+                    });
+                });
+        });
+    </script>
+</body>
+</html>

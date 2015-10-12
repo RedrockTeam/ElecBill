@@ -35,7 +35,8 @@ var layer = (function () {
         }, 300, 'ease-in');
     };
 
-    Layer.init = function (logo, option, callback) {
+    Layer.init = function (logo, info, option, callback) {
+        console.log(logo);
         if (option.length == 1) {
             string = '<div class="' + option[0].className + '">' + option[0].value + '</div>';
         } else {
@@ -45,7 +46,8 @@ var layer = (function () {
             });
         }   
         $('.layer .btn').html(string);
-        $('.box .boxLogo').css('background-image', logo);
+        $('.layer .info').html(info);
+        $('.boxLogo').css('background-image', 'url(' + logo.src + ')');
         this.show();
         callback();
         return this;
